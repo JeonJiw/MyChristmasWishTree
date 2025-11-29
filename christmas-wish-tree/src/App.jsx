@@ -1,7 +1,8 @@
 // ==================== Christmas Wish Tree React App ====================
 // Save this as: src/App.jsx
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import html2canvas from "html2canvas";
 import treeImage from "./assets/christmas-tree.jpg"; // Adjust the path based on your actual image location
 
 // ==================== DATA SERVICES ====================
@@ -162,9 +163,10 @@ function HomePage({ onCreateTree }) {
     <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-b from-red-50 via-emerald-50 to-green-100">
       <div className="max-w-5xl w-full flex flex-col md:flex-row items-center gap-10">
         <div className="text-center md:text-left max-w-md">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-green-800 drop-shadow-sm mb-3">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-green-800 drop-shadow-sm mb-1">
             🎄 My Christmas Wish Tree
           </h1>
+
           <p className="text-gray-700 mb-6 text-sm md:text-base">
             Turn your wish list into a cozy Christmas tree and share it with
             family and friends.
@@ -185,7 +187,7 @@ function HomePage({ onCreateTree }) {
 
         <div className="w-full md:w-1/2 mt-10 md:mt-0">
           {/* Preview tree with no ornaments yet */}
-          <TreeCanvas ornaments={[]} isPreview />
+          <TreeCanvas ornaments={[]} isPreview variant="home" />
         </div>
       </div>
     </div>
@@ -202,12 +204,14 @@ function TreeEditor({
   onShare,
   onBack,
 }) {
+  const treeRef = useRef(null);
   const [editingGift, setEditingGift] = useState(null);
   const [giftName, setGiftName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [link, setLink] = useState("");
   const [priority, setPriority] = useState("medium");
+  console.log("DEBUG: TreeEditor 렌더링 됨");
 
   const resetForm = () => {
     setEditingGift(null);
@@ -255,29 +259,56 @@ function TreeEditor({
     }
   };
 
+  const handleDownloadImage = async () => {
+    if (!treeRef.current) return;
+    try {
+      const canvas = await html2canvas(treeRef.current, { scale: 2 });
+      const dataUrl = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `${tree.treeName || "my-christmas-wish-tree"}.png`;
+      link.click();
+    } catch (error) {
+      console.error("Failed to save image:", error);
+      alert("Sorry, could not save the image. Please try again.");
+    }
+  };
+
   return (
-    <div className="max-w-6xl mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
+    <div className="min-h-screen max-w-6xl mx-auto px-4 py-16 flex flex-col justify-center">
+      <div className="flex justify-between items-center mb-10">
         <button onClick={onBack} className="text-gray-600 hover:text-gray-800">
           ← Back
         </button>
         <h2 className="text-2xl font-bold text-green-700">
-          🎄 {tree.treeName}
+          🎄 {tree.treeName} (DEBUG)
         </h2>
-        <button
-          onClick={onShare}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
-        >
-          Share
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleDownloadImage}
+            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+          >
+            Save Story Image
+          </button>
+          <button
+            onClick={onShare}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+          >
+            Share
+          </button>
+        </div>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2 items-start">
-        <div className="flex justify-center">
-          <TreeCanvas ornaments={tree.ornaments} />
+      <div className="grid gap-10 md:grid-cols-2 items-start md:items-stretch">
+        <div className="flex justify-center items-center md:pr-4">
+          <TreeCanvas
+            ref={treeRef}
+            ornaments={tree.ornaments}
+            variant="editor"
+          />
         </div>
 
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-5">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-7">
           <h3 className="text-lg font-semibold text-gray-800 mb-3">
             {editingGift ? "Edit gift" : "Add a new gift"}
           </h3>
@@ -401,7 +432,10 @@ function TreeEditor({
 
 // ==================== TREE CANVAS (iPhone + Instagram story mock) ====================
 
-function TreeCanvas({ ornaments, isPreview = false }) {
+const TreeCanvas = React.forwardRef(function TreeCanvas(
+  { ornaments, isPreview = false, variant = "home" },
+  ref
+) {
   const displayOrnaments = isPreview
     ? [
         { id: "preview-1", giftName: "Bag" },
@@ -411,10 +445,17 @@ function TreeCanvas({ ornaments, isPreview = false }) {
       ]
     : ornaments || [];
 
+  const widthClass =
+    variant === "editor"
+      ? "w-[360px] md:w-[420px] lg:w-[460px]"
+      : "w-[260px] md:w-[280px]";
+
   return (
     <div className="flex justify-center">
       {/* iPhone frame */}
-      <div className="relative bg-black rounded-[2.5rem] p-3 shadow-2xl w-[260px] md:w-[280px]">
+      <div
+        className={`relative bg-black rounded-[2.5rem] p-3 shadow-2xl ${widthClass}`}
+      >
         {/* side button hints */}
         <div className="hidden md:block absolute -left-1 top-16 h-10 w-0.5 bg-neutral-700 rounded-full" />
         <div className="hidden md:block absolute -left-1 top-28 h-20 w-0.5 bg-neutral-700 rounded-full" />
@@ -441,6 +482,7 @@ function TreeCanvas({ ornaments, isPreview = false }) {
           {/* main story content */}
           <div className="relative mt-5 px-2 pb-3">
             <div
+              ref={ref}
               className="relative w-full mx-auto rounded-xl overflow-hidden border border-white/10"
               style={{ aspectRatio: "9 / 16" }} // Instagram Story ratio
             >
@@ -469,12 +511,26 @@ function TreeCanvas({ ornaments, isPreview = false }) {
                 const count = displayOrnaments.length || 1;
                 const top = 22 + (50 / count) * index; // distribute from ~22% to ~72%
                 const left = index % 2 === 0 ? "32%" : "68%"; // alternate left/right
+                const formattedPrice =
+                  typeof gift.price === "number"
+                    ? gift.price.toFixed(2)
+                    : gift.price;
+                const isClickable = !isPreview && !!gift.link;
+
+                const handleClick = () => {
+                  if (isClickable) {
+                    window.open(gift.link, "_blank", "noopener,noreferrer");
+                  }
+                };
 
                 return (
                   <div
                     key={gift.id || index}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1"
+                    className={`group absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1${
+                      isClickable ? " cursor-pointer" : ""
+                    }`}
                     style={{ top: `${top}%`, left }}
+                    onClick={handleClick}
                   >
                     <div className="w-7 h-7 rounded-full bg-red-600/90 border border-white/80 flex items-center justify-center text-[10px] text-white shadow-lg">
                       🎁
@@ -482,6 +538,11 @@ function TreeCanvas({ ornaments, isPreview = false }) {
                     {!isPreview && gift.giftName && (
                       <div className="px-2 py-0.5 rounded-full bg-black/70 text-[9px] text-white whitespace-nowrap">
                         {gift.giftName}
+                      </div>
+                    )}
+                    {!isPreview && formattedPrice && (
+                      <div className="px-2 py-0.5 rounded-full bg-emerald-600/80 text-[9px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                        ${formattedPrice}
                       </div>
                     )}
                   </div>
@@ -524,7 +585,7 @@ function TreeCanvas({ ornaments, isPreview = false }) {
       </div>
     </div>
   );
-}
+});
 
 // ==================== GIFT ITEM ====================
 
