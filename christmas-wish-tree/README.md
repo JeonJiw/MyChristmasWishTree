@@ -1,10 +1,10 @@
-🎄 My Christmas Wish Tree
+ # 🎄 My Christmas Wish Tree
 
 A mobile-first web application for creating and sharing Christmas wishlist trees with interactive visualization.
 
-Course: CPSC 3720 – Software Engineering (Fall 2025)
-Team: Jiwon Jeon & Chloe Lee
-Instructor: Dr. Jaspreet Kaur
+**Course:** CPSC 3720 – Software Engineering (Fall 2025)  
+**Team:** Jiwon Jeon & Chloe Lee  
+**Instructor:** Dr. Jaspreet Kaur
 
 📌 1. Project Overview
 
@@ -45,6 +45,7 @@ Testing	Jest, React Testing Library
 Storage	LocalStorage
 Tools	Node.js, Vite
 Documentation	UML, Mermaid, Word/PDF
+'''
 📌 4. Folder Structure
 christmas-wish-tree/
  ├─ public/
@@ -63,7 +64,7 @@ christmas-wish-tree/
  ├─ package.json
  ├─ tailwind.config.js
  └─ vite.config.js
-
+'''
 📌 5. Installation & Run Instructions
 npm install
 npm run dev
