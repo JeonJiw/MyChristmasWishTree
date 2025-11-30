@@ -37,34 +37,73 @@ This project demonstrates:
 
 🧪 Full unit & integration tests
 
-📌 3. Tech Stack
-Layer	Technology
-Frontend	React (Vite)
-Styling	Tailwind CSS
-Testing	Jest, React Testing Library
-Storage	LocalStorage
-Tools	Node.js, Vite
-Documentation	UML, Mermaid, Word/PDF
-'''
-📌 4. Folder Structure
+### 📌 3. Tech Stack
+
+**Frontend:** React (Vite)  
+**Styling:** Tailwind CSS  
+**Testing:** Jest, React Testing Library  
+**Storage:** LocalStorage  
+**Tools:** Node.js, Vite  
+**Documentation:** UML, Mermaid, Word/PDF
+
+---
+
+### 📌 4. Folder Structure
 christmas-wish-tree/
- ├─ public/
- ├─ src/
- │   ├─ __tests__/              # Full test suite
- │   │    ├─ HomePage.test.jsx
- │   │    ├─ TreeCanvas.test.jsx
- │   │    ├─ TreeEditor.test.jsx
- │   │    ├─ shareService.test.js
- │   │    └─ storageService.test.js
- │   ├─ assets/
- │   ├─ components/
- │   ├─ pages/
- │   └─ services/
- ├─ docs/                       # Final Report, Design Doc, Testing Doc, UML, PPT
- ├─ package.json
- ├─ tailwind.config.js
- └─ vite.config.js
-'''
+│
+├── node_modules/
+│
+├── public/
+│
+├── src/
+│   ├── __tests__/               # Full test suite
+│   │   ├── HomePage.test.jsx
+│   │   ├── TreeCanvas.test.jsx
+│   │   ├── TreeEditor.test.jsx
+│   │   ├── shareService.test.js
+│   │   └── storageService.test.js
+│   │
+│   ├── assets/
+│   │   └── christmas-tree.jpg
+│   │
+│   ├── components/
+│   │   ├── GiftItem.jsx
+│   │   ├── ShareModal.jsx
+│   │   └── TreeCanvas.jsx
+│   │
+│   ├── pages/
+│   │   ├── Homepage.jsx
+│   │   └── TreeEditor.jsx
+│   │
+│   ├── services/
+│   │   ├── shareService.js
+│   │   └── storageService.js
+│   │
+│   ├── App.css
+│   ├── App.jsx
+│   ├── App.test.js
+│   ├── index.css
+│   ├── index.js
+│   ├── logo.svg
+│   ├── reportWebVitals.js
+│   └── setupTests.js
+│
+├── docs/                       # Reports & Diagrams
+│   ├── Final_Project_Report.docx
+│   ├── Design_Documentation.docx
+│   ├── Testing_Documentation.docx
+│   ├── UML_Diagrams/
+│   └── Presentation_Slides.pptx
+│
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+└── README.md
+
+
+
 📌 5. Installation & Run Instructions
 npm install
 npm run dev
