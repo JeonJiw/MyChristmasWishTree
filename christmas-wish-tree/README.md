@@ -49,6 +49,7 @@ This project demonstrates:
 ---
 
 ### 📌 4. Folder Structure
+```
 christmas-wish-tree/
 │
 ├── node_modules/
@@ -101,7 +102,7 @@ christmas-wish-tree/
 ├── postcss.config.js
 ├── tailwind.config.js
 └── README.md
-
+```
 
 
 📌 5. Installation & Run Instructions
