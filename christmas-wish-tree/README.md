@@ -6,7 +6,7 @@ A mobile-first web application for creating and sharing Christmas wishlist trees
 **Team:** Jiwon Jeon & Chloe Lee  
 **Instructor:** Dr. Jaspreet Kaur
 
-📌 1. Project Overview
+### 📌 1. Project Overview
 
 My Christmas Wish Tree is a web application that allows users to visually create and share wishlist items on a customizable Christmas tree.
 Users can add gifts as ornaments, drag them around the tree, edit their information, and generate a shareable link for friends or family.
@@ -19,7 +19,7 @@ This project demonstrates:
 ✔️ Formal software engineering documentation
 ✔️ Jest + RTL testing with coverage
 
-📌 2. Features
+### 📌 2. Features
 
 🎄 Create a personalized wishlist tree
 
@@ -105,7 +105,7 @@ christmas-wish-tree/
 ```
 
 
-📌 5. Installation & Run Instructions
+### 📌 5. Installation & Run Instructions
 npm install
 npm run dev
 
@@ -113,7 +113,7 @@ npm run dev
 App runs at:
 👉 http://localhost:5173
 
-📌 6. Running Tests
+### 📌 6. Running Tests
 Run all tests
 npm test
 
@@ -133,7 +133,7 @@ StorageService load/save behavior
 
 UI interaction tests (RTL)
 
-📌 7. Documentation
+### 📌 7. Documentation
 
 All project deliverables are included in /docs:
 
@@ -149,8 +149,8 @@ Presentation Slides (PPTX)
 
 Presenter Script + Demo Script
 
-📌 8. Team Contributions
-Chloe Lee
+### 📌 8. Team Contributions
+Jiwon Jeon
 
 Project setup (React + Vite + Tailwind)
 
@@ -164,7 +164,7 @@ UML diagrams & documentation
 
 Presentation prep
 
-Jiwon Jeon
+Chloe Lee
 
 Application logic (CRUD operations)
 
@@ -176,7 +176,7 @@ Test implementation (unit + integration)
 
 Additional UI logic
 
-📌 9. License
+### 📌 9. License
 
 Created for CPSC 3720 – Fall 2025.
 Not intended for commercial use.
